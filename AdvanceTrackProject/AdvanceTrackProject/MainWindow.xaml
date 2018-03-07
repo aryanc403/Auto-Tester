@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdvanceTrackProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="660" Width="859.079">
+        Title="AdvanceTrackProject" Height="660" Width="860">
     <Grid Margin="0,0,-0.2,11.4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="27*"/>
@@ -30,23 +30,22 @@
             <RowDefinition Height="43*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Path (.exe)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,5.6,0,0" Height="25" Width="64" Grid.Row="3" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Path to Exectutable File" VerticalAlignment="Top" Width="590" Margin="10,5.6,0,0" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="5"/>
-        <Button Content="Browse..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,5.6,0,0" Grid.Row="3" Height="23" Grid.Column="7" Grid.ColumnSpan="2"/>
+        <Label Name="fileLbl" Content="Path (.exe)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,5.6,0,0" Height="25" Width="64" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <TextBox Name="fileTb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Path to Exectutable File" VerticalAlignment="Top" Width="590" Margin="10,5.6,0,0" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="5"/>
+        <Button Name="browseBtn" Click="browseBtn_Click" Content="Browse..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,5.6,0,0" Grid.Row="3" Height="23" Grid.Column="7" Grid.ColumnSpan="2"/>
 
-        <Label Content="Path (URL)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,6,0,0" Height="33" Width="64" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Problem Statement URL" VerticalAlignment="Top" Width="590" Margin="10,10,0,0" Grid.Column="3" Grid.ColumnSpan="5" Grid.Row="1"/>
-        <Button Content="Fetch..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,10,0,0" Height="23" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Name="pathUrlLbl" Content="Path (URL)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,6,0,0" Height="33" Width="64" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBox Name="pathUrlTb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Problem Statement URL" VerticalAlignment="Top" Width="590" Margin="10,10,0,0" Grid.Column="3" Grid.ColumnSpan="5" Grid.Row="1"/>
+        <Button Name="fetchBtn" Content="Fetch..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,10,0,0" Height="23" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2"/>
 
-        <DataGrid Grid.ColumnSpan="9" HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="806" Margin="10,0.6,0,0" Grid.Row="6"/>
+        <DataGrid Name="dataTbl" Grid.ColumnSpan="9" HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="806" Margin="10,0.6,0,0" Grid.Row="6"/>
 
+        <Label Name="inpLbl" Content="INPUT" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,3,0,0" Grid.Row="5" Grid.ColumnSpan="5" Height="35" Width="154" Grid.RowSpan="2"/>
+        <Label Name="expOutLbl" Content= "Expected Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.2,0,0,0" Grid.Row="5" Height="38" Width="220" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <Label Name="prmOutLbl" Content="Program Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.6,0,0,0" Grid.Row="5" Height="38" Width="220" Grid.Column="5" Grid.RowSpan="2"/>
+        <Label Name="resLbl"  Content="Result" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="220.6,3,0,0" Grid.Row="5" Height="35" Width="180" Grid.Column="5" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
 
-        <Label Content="INPUT" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,3,0,0" Grid.Row="5" Grid.ColumnSpan="5" Height="35" Width="154" Grid.RowSpan="2"/>
-        <Label Content= "Expected Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.2,0,0,0" Grid.Row="5" Height="38" Width="220" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-        <Label Content="Program Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.6,0,0,0" Grid.Row="5" Height="38" Width="220" Grid.Column="5" Grid.RowSpan="2"/>
-        <Label Content="Result" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="220.6,3,0,0" Grid.Row="5" Height="35" Width="180" Grid.Column="5" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
-
-        <Button Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Grid.Column="7" Margin="18.2,10,0,0" Grid.Row="7" Height="19" Grid.ColumnSpan="2"/>
+        <Button Name="runBtn" Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Grid.Column="7" Margin="18.2,10,0,0" Grid.Row="7" Height="19" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

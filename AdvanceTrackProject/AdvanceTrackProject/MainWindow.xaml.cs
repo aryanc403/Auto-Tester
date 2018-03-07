@@ -24,5 +24,25 @@ namespace AdvanceTrackProject
         {
             InitializeComponent();
         }
+
+        private void browseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //create dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            //set type of file to open
+            dlg.DefaultExt = ".exe";
+            dlg.Filter = "Executable (.exe)|*.exe";
+
+            //open dialog box
+            Nullable<bool> isOpened = dlg.ShowDialog();
+
+            //if file selected
+            if(isOpened == true)
+            {
+                string fileName = dlg.FileName;
+                fileTb.Text = fileName;
+            }
+        }
     }
 }
