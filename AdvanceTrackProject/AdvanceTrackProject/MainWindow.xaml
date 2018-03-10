@@ -36,7 +36,7 @@
 
         <Label Name="pathUrlLbl" Content="Path (URL)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,6,0,0" Height="33" Width="64" Grid.Row="1" Grid.ColumnSpan="2"/>
         <TextBox Name="pathUrlTb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Problem Statement URL" VerticalAlignment="Top" Width="590" Margin="10,10,0,0" Grid.Column="3" Grid.ColumnSpan="5" Grid.Row="1"/>
-        <Button Name="fetchBtn" Content="Fetch..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,10,0,0" Height="23" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Button Name="fetchBtn" Content="Fetch..." Click="fetchBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,10,0,0" Height="23" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2"/>
 
         <DataGrid Name="dataTbl" Grid.ColumnSpan="9" HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="806" Margin="10,0.6,0,0" Grid.Row="6"/>
 
