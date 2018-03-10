@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Http;
 using HtmlAgilityPack;
+using System.Data;
 
 namespace AdvanceTrackProject
 {
@@ -58,7 +59,7 @@ namespace AdvanceTrackProject
             var url = "http://codeforces.com/problemset/problem/950/B";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
             var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(url);
+            var html = await httpClient.GetStringAsync(url);//set Source code
 
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
@@ -66,16 +67,49 @@ namespace AdvanceTrackProject
             var inputs = htmlDocument.DocumentNode.Descendants("div")
                 .Where(node => node.GetAttributeValue
                 ("class", "")
-                    .Equals("input")).ToList();
+                    .Equals("input")).ToList();//store All of inputs in a list
 
             var outputs = htmlDocument.DocumentNode.Descendants("div")
                             .Where(node => node.GetAttributeValue
                             ("class", "")
-                                .Equals("output")).ToList();
+                                .Equals("output")).ToList();//store All of outputs in a list
 
+            var n = inputs.Count();
+            //dataTbl.initializeDataTable(n+1);
+            Console.WriteLine("Aryan");
+        }
 
+        void initializeDataTable(int n)
+        {
+            DataTable dt = new DataTable();
+            DataColumn no = new DataColumn("Test Case", typeof(int));
+            DataColumn input = new DataColumn("Input", typeof(string));
+            DataColumn expOut = new DataColumn("Expected Output", typeof(string));
+            DataColumn output = new DataColumn("Output", typeof(string));
+            DataColumn result = new DataColumn("Result", typeof(string));
 
-            //Console.WriteLine("Aryan");
+            dt.Columns.Add(no);
+            dt.Columns.Add(input);
+            dt.Columns.Add(expOut);
+            dt.Columns.Add(output);
+            dt.Columns.Add(result);
+
+            for (int i = 0; i < n; ++i)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = i + 1;
+                row[1] = " - ";
+                row[2] = " - ";
+                row[3] = " - ";
+                row[4] = " - ";
+                dt.Rows.Add(row);
+            }
+            dataTbl.ItemsSource = dt.DefaultView;
+        }
+
+        private void dataTbl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.initializeDataTable(3);
         }
     }
 }
