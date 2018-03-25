@@ -45,16 +45,16 @@
         <Label Name="prmOutLbl" Content="Program Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,171,0,0" Grid.Row="6" Height="38" Width="228" Grid.Column="5"/>
         <Label Name="resLbl"  Content="Result" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,171,0,0" Grid.Row="6" Height="38" Width="185" Grid.Column="6" Grid.ColumnSpan="4"/>
 
-        <Button Name="runBtn" Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Grid.Column="7" Margin="18.2,10,0,0" Grid.Row="7" Height="19" Grid.ColumnSpan="2"/>
-        <RichTextBox Name="pblStat" Grid.ColumnSpan="10" HorizontalAlignment="Left" Height="213" Grid.RowSpan="2" VerticalAlignment="Top" Width="823" Margin="7,0.2,0,0" Grid.Row="5">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="Problem Statement."/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <Button Name="runBtn" MouseDoubleClick="runBtn_MouseDoubleClick" Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Grid.Column="7" Margin="18.2,10,0,0" Grid.Row="7" Height="19" Grid.ColumnSpan="2"/>
         <Label Name="tlLbl" Content="Time Limit (in s) -" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,0.2,0,0" Grid.Row="7" Height="29" Width="107" Grid.ColumnSpan="4"/>
         <TextBox Name="tlVal" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="120" Grid.Column="3" Margin="56.6,0.2,0,0" Grid.Row="7" Grid.ColumnSpan="2"/>
+        <Label Content="Total Test Cases" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="133" Grid.Column="4" Margin="95.8,0.2,0,0" Grid.Row="7"/>
+        <TextBox Name="totCases" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="111" Grid.Column="5" Margin="1,0.2,0,0" Grid.Row="7"/>
+        <WebBrowser Name="stateMent" HorizontalAlignment="Left" Height="231" VerticalAlignment="Top" Width="820" Margin="10,43,0,0" Grid.Row="3" Grid.RowSpan="4" Style="{DynamicResource stateMent}" Grid.ColumnSpan="10">
+            <WebBrowser.Resources>
+                <Style x:Key="stateMent" TargetType="{x:Type WebBrowser}"/>
+            </WebBrowser.Resources>
+        </WebBrowser>
 
     </Grid>
 </Window>

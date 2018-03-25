@@ -85,12 +85,12 @@ namespace AdvanceTrackProject
             return text;
         }
 
-        void createFile( List <HtmlNode> data ,string pre,int n,string path)
+        void createFile( List <HtmlNode> data ,string pre,int n,string dir)
         {
             int i;
             for(i=1;i<=n;++i)
             {
-                string fileName = path + "\\" + pre + i + ".txt";
+                string fileName = dir + "\\" + pre + i + ".txt";
                 //FileStream f = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
                 string toWrite = convertHtmlToText(data[i-1].InnerHtml);
 
@@ -120,8 +120,8 @@ namespace AdvanceTrackProject
         //private static async Task StartCrawlerAsync()
         private async Task StartCrawlerAsync()
         {
-            //var url = "http://codeforces.com/problemset/problem/957/A";
-            var url = @"http://codeforces.com/problemset/problem/955/A";
+            var url = "http://codeforces.com/problemset/problem/957/A";
+            //var url = @"http://codeforces.com/problemset/problem/955/A";
             //fileTb.Text = @"E:\PracticeWPF\Tritonic Iridescence\a.exe";
             //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
@@ -132,6 +132,7 @@ namespace AdvanceTrackProject
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
 
+            stateMent.Navigate(url);
             var inputs = htmlDocument.DocumentNode.Descendants("div")
                 .Where(node => node.GetAttributeValue
                 ("class", "")
@@ -143,10 +144,10 @@ namespace AdvanceTrackProject
                                 .Equals("output")).ToList();//store All of outputs in a list
 
             var n = inputs.Count();
+            totCases.Text = n.ToString();
             createFile(inputs, "in", n, findDir(exeFile));
             createFile(outputs, "exp", n, findDir(exeFile));
             //dataTbl.initializeDataTable(n+1);
-            Console.WriteLine("Aryan");
         }
 
         void initializeDataTable(int n)
@@ -180,6 +181,22 @@ namespace AdvanceTrackProject
         private void dataTbl_Loaded(object sender, RoutedEventArgs e)
         {
             this.initializeDataTable(3);
+        }
+
+        private void runBtn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //await runExe(exeFile, n);
+        }
+
+        private async Task runExe(string exeFile, int n)
+        {
+            string dir = findDir(exeFile);
+            string fileName = exeFile.Substring(dir.Length + 1, exeFile.Length - dir.Length - 1);
+
+            for (int i = 1; i <= n; ++i)
+            {
+                //runForFile(dir,)
+            }
         }
     }
 }
