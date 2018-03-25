@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Http;
 using HtmlAgilityPack;
 using System.Data;
+using System.IO;
 
 namespace AdvanceTrackProject
 {
@@ -54,12 +55,48 @@ namespace AdvanceTrackProject
             StartCrawlerAsync();
         }
 
-        private static async Task StartCrawlerAsync()
+        public string findDir(string addr)
         {
-            var url = "http://codeforces.com/problemset/problem/950/B";//sample url must change before final submit
+            string path;
+            int i = 0;
+            for (i = addr.Length - 1; i >= 0; i--)
+            {
+                if (addr[i] == '\\')
+                {
+                    break;
+                }
+            }
+            path = addr.Substring(0, i);
+            return path;
+        }
+
+        void createFile( List <HtmlNode> data ,string pre,int n,string path)
+        {
+            int i;
+            for(i=1;i<=n;++i)
+            {
+                FileStream f = new FileStream(path +"\\" + pre + i + ".txt", FileMode.Create, FileAccess.ReadWrite);
+
+                string toWrite = data[i-1].InnerText;
+                
+                for(int j=0;j<toWrite.Length;++j)
+                {
+                    f.WriteByte((byte)(toWrite[j]));
+                }
+                f.Close();
+            }
+        }
+
+        //private static async Task StartCrawlerAsync()
+        private async Task StartCrawlerAsync()
+        {
+            var url = "http://codeforces.com/problemset/problem/957/A";
+            //fileTb.Text = @"E:\PracticeWPF\Tritonic Iridescence\a.exe";
+            //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
             var httpClient = new HttpClient();
             var html = await httpClient.GetStringAsync(url);//set Source code
+            var exeFile = @"E:\PracticeWPF\Tritonic Iridescence\a.exe"; // fileTb.Text;
 
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
@@ -75,6 +112,8 @@ namespace AdvanceTrackProject
                                 .Equals("output")).ToList();//store All of outputs in a list
 
             var n = inputs.Count();
+            createFile(inputs, "in", n, findDir(exeFile));
+            createFile(outputs, "exp", n, findDir(exeFile));
             //dataTbl.initializeDataTable(n+1);
             Console.WriteLine("Aryan");
         }
