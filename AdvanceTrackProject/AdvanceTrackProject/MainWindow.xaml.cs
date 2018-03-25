@@ -17,6 +17,7 @@ using System.Net.Http;
 using HtmlAgilityPack;
 using System.Data;
 using System.IO;
+using System.Diagnostics;
 
 namespace AdvanceTrackProject
 {
@@ -118,14 +119,15 @@ namespace AdvanceTrackProject
         //private static async Task StartCrawlerAsync()
         private async Task StartCrawlerAsync()
         {
-            var url = "http://codeforces.com/problemset/problem/957/A";
+            var url = pathUrlTb.Text;
+            //var url = "http://codeforces.com/problemset/problem/957/A";
             //var url = @"http://codeforces.com/problemset/problem/955/A";
             //fileTb.Text = @"E:\PracticeWPF\Tritonic Iridescence\a.exe";
             //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
             var httpClient = new HttpClient(); //create HttpClient class
             var html = await httpClient.GetStringAsync(url);//set Source code
-            var exeFile = @"E:\PracticeWPF\Tritonic Iridescence\a.exe"; // fileTb.Text;
+            var exeFile = fileTb.Text; //@"E:\PracticeWPF\Tritonic Iridescence\a.exe"; //
 
             var htmlDocument = new HtmlDocument(); //create HtmlDocument class
             htmlDocument.LoadHtml(html); // loading html document in HtmlDocument class
@@ -188,18 +190,37 @@ namespace AdvanceTrackProject
 
         private void runBtn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //await runExe(exeFile, n);
+            string location = fileTb.Text;//@"E:\PracticeWPF\Tritonic Iridescence\a.exe"; //
+            string dir = findDir(location);
+            string appName = location.Substring(dir.Length + 1, location.Length - dir.Length - 1);
+            int totalCases = Convert.ToInt32(totCases.Text);
+            for(int i =1; i<= totalCases;++i)
+            {
+                runExe(appName,dir,i);
+            }
         }
 
-        private async Task runExe(string exeFile, int n)
+        private async Task runExe(string app,string dir ,int i)
         {
-            string dir = findDir(exeFile);
-            string fileName = exeFile.Substring(dir.Length + 1, exeFile.Length - dir.Length - 1);
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.CreateNoWindow = false;// true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
 
-            for (int i = 1; i <= n; ++i)
-            {
-                //runForFile(dir,)
-            }
+            int j = dir.IndexOf("\\");
+            process.StandardInput.WriteLine(dir.Substring(0, j));
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine(@"cd /../../../../../../../../../../../../../");
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("cd " + dir.Substring(j, dir.Length - j));
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine(app + " <in" + i + ".txt> out" + i + ".txt");
+            process.StandardInput.Flush();
+            //process.StandardInput.WriteLine("exit");
+            //process.StandardInput.Flush();
         }
     }
 }
