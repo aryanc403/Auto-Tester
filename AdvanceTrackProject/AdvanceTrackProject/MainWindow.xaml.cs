@@ -70,27 +70,58 @@ namespace AdvanceTrackProject
             return path;
         }
 
+        string convertHtmlToText(string text)
+        {
+            int i = 0;
+            i = text.IndexOf("<pre>");
+            text = text.Substring(i + 5, text.Length - i - 11);
+            i = text.IndexOf("<br>");
+
+            while (i != -1)
+            {
+                text = text.Substring(0, i) + "\n" + text.Substring(i + 4, text.Length - i - 4);
+                i = text.IndexOf("<br>");
+            }
+            return text;
+        }
+
         void createFile( List <HtmlNode> data ,string pre,int n,string path)
         {
             int i;
             for(i=1;i<=n;++i)
             {
-                FileStream f = new FileStream(path +"\\" + pre + i + ".txt", FileMode.Create, FileAccess.ReadWrite);
+                string fileName = path + "\\" + pre + i + ".txt";
+                //FileStream f = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
+                string toWrite = convertHtmlToText(data[i-1].InnerHtml);
 
-                string toWrite = data[i-1].InnerText;
-                
-                for(int j=0;j<toWrite.Length;++j)
+                int end;
+                end = toWrite.IndexOf("\n");
+
+                List<string> lines = new List<string>();
+
+                while(end!=-1)
+                {
+                    lines.Add(toWrite.Substring(0, end));
+                    toWrite = toWrite.Substring(end + 1, toWrite.Length - end -1);
+                    end = toWrite.IndexOf("\n");
+                }
+
+                //byte b[] = new byte[toWrite];
+                /*for(int j=0;j<toWrite.Length;++j)
                 {
                     f.WriteByte((byte)(toWrite[j]));
-                }
-                f.Close();
+                }*/
+                //f.Write(b, 0, b.length);
+                //f.Close();
+                System.IO.File.WriteAllLines(fileName, lines);
             }
         }
 
         //private static async Task StartCrawlerAsync()
         private async Task StartCrawlerAsync()
         {
-            var url = "http://codeforces.com/problemset/problem/957/A";
+            //var url = "http://codeforces.com/problemset/problem/957/A";
+            var url = @"http://codeforces.com/problemset/problem/955/A";
             //fileTb.Text = @"E:\PracticeWPF\Tritonic Iridescence\a.exe";
             //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
