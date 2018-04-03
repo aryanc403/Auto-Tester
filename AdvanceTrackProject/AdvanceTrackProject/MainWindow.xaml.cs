@@ -249,19 +249,22 @@ namespace AdvanceTrackProject
             process.StandardInput.Flush();
             //process.WaitForExit();
             int TL = Convert.ToInt32(tlVal.Text);
-            bool isTLE = false;
-            while (process.IsRunning() && sw.Elapsed.TotalMilliseconds <= (TL + 1000))
+            bool isTLE = false,a;
+            while (process.IsRunning() && (sw.Elapsed.TotalMilliseconds <= (TL + 100)) &&(isTLE==false))
             {
                 if( sw.Elapsed.TotalMilliseconds > TL )
                 {
                     isTLE = true;
+                    sw.Stop();
                     break;
                 }
+                a = process.IsRunning();
             }
-
-            if(isTLE)
+            sw.Stop();
+            if(sw.Elapsed.TotalMilliseconds > TL)
             {
                 process.Kill();
+                process.WaitForExit();
                 string outputFile = dir + "\\out" + i + ".txt";
                 List<string> TLEVerdict = new List<string>();
                 TLEVerdict.Add(@"Time Limit Exceed");
