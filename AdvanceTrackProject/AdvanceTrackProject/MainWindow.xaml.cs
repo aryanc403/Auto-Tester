@@ -24,6 +24,29 @@ namespace AdvanceTrackProject
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    public static class ProcessExtensions
+    {
+        public static bool IsRunning (this Process process)
+        {
+            if(process == null)
+            {
+                throw new ArgumentNullException("process");
+            }
+
+            try
+            {
+                Process.GetProcessById(process.Id);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -210,17 +233,42 @@ namespace AdvanceTrackProject
             process.StartInfo.UseShellExecute = false;
             process.Start();
 
-            int j = dir.IndexOf("\\");
-            process.StandardInput.WriteLine(dir.Substring(0, j));
+            int drive = dir.IndexOf("\\");
+            process.StandardInput.WriteLine(dir.Substring(0, drive));
             process.StandardInput.Flush();
             process.StandardInput.WriteLine(@"cd /../../../../../../../../../../../../../");
             process.StandardInput.Flush();
-            process.StandardInput.WriteLine("cd " + dir.Substring(j, dir.Length - j));
+            process.StandardInput.WriteLine("cd " + dir.Substring(drive, dir.Length - drive));
             process.StandardInput.Flush();
+            Stopwatch sw = new Stopwatch();
+            sw.Reset();
+            sw.Start();
             process.StandardInput.WriteLine(app + " <in" + i + ".txt> out" + i + ".txt");
             process.StandardInput.Flush();
-            //process.StandardInput.WriteLine("exit");
-            //process.StandardInput.Flush();
+            process.StandardInput.WriteLine("exit");
+            process.StandardInput.Flush();
+            //process.WaitForExit();
+            int TL = Convert.ToInt32(tlVal.Text);
+            bool isTLE = false;
+            while (process.IsRunning() && sw.Elapsed.TotalMilliseconds <= (TL + 1000))
+            {
+                if( sw.Elapsed.TotalMilliseconds > TL )
+                {
+                    isTLE = true;
+                    break;
+                }
+            }
+
+            if(isTLE)
+            {
+                process.Kill();
+                string outputFile = dir + "\\out" + i + ".txt";
+                List<string> TLEVerdict = new List<string>();
+                TLEVerdict.Add(@"Time Limit Exceed");
+                System.IO.File.WriteAllLines(outputFile, TLEVerdict );
+            }
+
+            process.Close();
         }
     }
 }
