@@ -54,6 +54,34 @@ namespace AdvanceTrackProject
             InitializeComponent();
         }
 
+        void kill_Process(Int64 id,string dir, string file)
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.CreateNoWindow = false;// true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
+            process.StandardInput.WriteLine(@"Taskkill /PID " + id + @"/F");
+            process.StandardInput.Flush();
+            int drive = dir.IndexOf("\\");
+            process.StandardInput.WriteLine(dir.Substring(0, drive));
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine(@"cd /../../../../../../../../../../../../../");
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("cd " + dir.Substring(drive, dir.Length - drive));
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("del " + file);
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("exit");
+            process.StandardInput.Flush();
+            List<string> TLEVerdict = new List<string>();
+            TLEVerdict.Add(@"Time Limit Exceed");
+            //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
+            System.IO.File.WriteAllLines(dir + @"\" +file, TLEVerdict);
+        }
+
         private void browseBtn_Click(object sender, RoutedEventArgs e)
         {
             //create dialog box
@@ -142,15 +170,16 @@ namespace AdvanceTrackProject
         //private static async Task StartCrawlerAsync()
         private async Task StartCrawlerAsync()
         {
-            var url = pathUrlTb.Text;
-            //var url = "http://codeforces.com/problemset/problem/957/A";
+            //var url = pathUrlTb.Text;
+            var url = "http://codeforces.com/problemset/problem/957/A";
             //var url = @"http://codeforces.com/problemset/problem/955/A";
             //fileTb.Text = @"E:\PracticeWPF\Tritonic Iridescence\a.exe";
             //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
             var httpClient = new HttpClient(); //create HttpClient class
             var html = await httpClient.GetStringAsync(url);//set Source code
-            var exeFile = fileTb.Text; //@"E:\PracticeWPF\Tritonic Iridescence\a.exe"; //
+            //var exeFile = fileTb.Text; 
+            var exeFile = @"E:\PracticeWPF\Tritonic Iridescence\a.exe"; 
 
             var htmlDocument = new HtmlDocument(); //create HtmlDocument class
             htmlDocument.LoadHtml(html); // loading html document in HtmlDocument class
@@ -240,6 +269,7 @@ namespace AdvanceTrackProject
             process.StandardInput.Flush();
             process.StandardInput.WriteLine("cd " + dir.Substring(drive, dir.Length - drive));
             process.StandardInput.Flush();
+            int id = process.Id;
             Stopwatch sw = new Stopwatch();
             sw.Reset();
             sw.Start();
@@ -261,17 +291,20 @@ namespace AdvanceTrackProject
                 a = process.IsRunning();
             }
             sw.Stop();
-            if(sw.Elapsed.TotalMilliseconds > TL)
+            if (sw.Elapsed.TotalMilliseconds > TL)
             {
-                process.Kill();
-                process.WaitForExit();
                 string outputFile = dir + "\\out" + i + ".txt";
+                kill_Process(process.Id,dir, "out" + i + ".txt");//process.Kill();
+                //process.WaitForExit();
                 List<string> TLEVerdict = new List<string>();
                 TLEVerdict.Add(@"Time Limit Exceed");
-                System.IO.File.WriteAllLines(outputFile, TLEVerdict );
+                //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
+                System.IO.File.WriteAllLines(outputFile, TLEVerdict);
             }
-
-            process.Close();
+            else
+            {
+                process.Close();
+            }
         }
     }
 }
