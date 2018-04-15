@@ -300,14 +300,14 @@ namespace AdvanceTrackProject
                 kill_Process(process.Id,dir, "out" + i + ".txt");//process.Kill();
                 //process.WaitForExit();
                 List<string> TLEVerdict = new List<string>();
-                TLEVerdict.Add(@"Time Limit Exceed.");
+                TLEVerdict.Add(@"TimeLimitExceed.");
                 //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
                 System.IO.File.WriteAllLines(logFile, TLEVerdict);
             }
             else
             {
                 List<string> _success = new List<string>();
-                _success.Add(@"Sucessful.");
+                _success.Add(@"Successful.");
                 //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
                 System.IO.File.WriteAllLines(logFile, _success);
                 process.Close();
