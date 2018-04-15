@@ -21,6 +21,7 @@ using System.Diagnostics;
 
 namespace AdvanceTrackProject
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -76,10 +77,10 @@ namespace AdvanceTrackProject
             process.StandardInput.Flush();
             process.StandardInput.WriteLine("exit");
             process.StandardInput.Flush();
-            List<string> TLEVerdict = new List<string>();
-            TLEVerdict.Add(@"Time Limit Exceed");
+            //List<string> TLEVerdict = new List<string>();
+            //TLEVerdict.Add(@"Time Limit Exceed");
             //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
-            System.IO.File.WriteAllLines(dir + @"\" +file, TLEVerdict);
+            //System.IO.File.WriteAllLines(dir + @"\" +file, TLEVerdict);
         }
 
         private void browseBtn_Click(object sender, RoutedEventArgs e)
@@ -275,8 +276,10 @@ namespace AdvanceTrackProject
             sw.Start();
             process.StandardInput.WriteLine(app + " <in" + i + ".txt> out" + i + ".txt");
             process.StandardInput.Flush();
+            //int x = process.ExitCode;
             process.StandardInput.WriteLine("exit");
             process.StandardInput.Flush();
+            //int y = process.ExitCode;
             //process.WaitForExit();
             int TL = Convert.ToInt32(tlVal.Text);
             bool isTLE = false,a;
@@ -290,19 +293,23 @@ namespace AdvanceTrackProject
                 }
                 a = process.IsRunning();
             }
+            string logFile = dir + "\\log" + i + ".txt";
             sw.Stop();
             if (sw.Elapsed.TotalMilliseconds > TL)
             {
-                string outputFile = dir + "\\out" + i + ".txt";
                 kill_Process(process.Id,dir, "out" + i + ".txt");//process.Kill();
                 //process.WaitForExit();
                 List<string> TLEVerdict = new List<string>();
-                TLEVerdict.Add(@"Time Limit Exceed");
+                TLEVerdict.Add(@"Time Limit Exceed.");
                 //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
-                System.IO.File.WriteAllLines(outputFile, TLEVerdict);
+                System.IO.File.WriteAllLines(logFile, TLEVerdict);
             }
             else
             {
+                List<string> _success = new List<string>();
+                _success.Add(@"Sucessful.");
+                //System.IO.File.WriteAllLines(@"E:\PracticeWPF\Tritonic Iridescence\out4.txt"/*outputFile*/, TLEVerdict );
+                System.IO.File.WriteAllLines(logFile, _success);
                 process.Close();
             }
         }
