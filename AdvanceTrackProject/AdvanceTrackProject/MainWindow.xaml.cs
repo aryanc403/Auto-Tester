@@ -115,7 +115,7 @@ namespace AdvanceTrackProject
         {
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.CreateNoWindow = false;// true;
+            process.StartInfo.CreateNoWindow = true;// true;
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;

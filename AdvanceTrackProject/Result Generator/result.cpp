@@ -75,6 +75,16 @@ int main(int argc, char *argv[])
         res<<x;
         x=exp.get();
         y=out.get();
+        
+        while(x==' '||x=='\t'||x=='\n')
+        {
+            x=exp.get();
+        }
+        
+        while(y==' '||y=='\t'||y=='\n')
+        {
+            y=out.get();
+        }
     }
 
     if(x!=y&&ac)
