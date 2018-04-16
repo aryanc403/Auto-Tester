@@ -55,6 +55,54 @@ namespace AdvanceTrackProject
             InitializeComponent();
         }
 
+        DataTable dt;// table;
+
+        string getContent(string file)
+        {
+
+            string text = File.ReadAllText(file, Encoding.UTF8);
+            return text;
+        }
+
+        void initializeDataTable()
+        {
+            //DataTable dt = new DataTable();
+            dt = new DataTable();
+            DataColumn no = new DataColumn("Test Case", typeof(int));
+            DataColumn input = new DataColumn("Input", typeof(string));
+            DataColumn expOut = new DataColumn("Expected Output", typeof(string));
+            DataColumn output = new DataColumn("Output", typeof(string));
+            DataColumn result = new DataColumn("Result", typeof(string));
+
+            string location = fileTb.Text;//@"E:\PracticeWPF\Tritonic Iridescence\a.exe"; //
+            string dir = findDir(location);
+            //string logFile = dir + "\\log" + i + ".txt";
+            if (dir == null)
+            {
+                return;
+            }
+
+            dt.Columns.Add(no);
+            dt.Columns.Add(input);
+            dt.Columns.Add(expOut);
+            dt.Columns.Add(output);
+            dt.Columns.Add(result);
+            
+            int totalCases = Convert.ToInt32(totCases.Text);
+
+            for (int i = 1; i <= totalCases ; ++i)
+            {
+                DataRow row = dt.NewRow();
+                row[0] = i;
+                row[1] = getContent(dir + @"\in" + i + ".txt");
+                row[2] = getContent(dir + @"\exp" + i + ".txt");
+                row[3] = getContent(dir + @"\out" + i + ".txt");
+                row[4] = getContent(dir + @"\res" + i + ".txt");
+                dt.Rows.Add(row);
+            }
+            dataTbl.ItemsSource = dt.DefaultView;
+        }
+
         void kill_Process(Int64 id,string dir, string file)
         {
             Process process = new Process();
@@ -106,6 +154,7 @@ namespace AdvanceTrackProject
         private void fetchBtn_Click(object sender, RoutedEventArgs e)
         {
             StartCrawlerAsync();//call task of web Crawler
+            initializeDataTable();
         }
 
         public string findDir(string addr)
@@ -219,39 +268,6 @@ namespace AdvanceTrackProject
             createFile(inputs, "in", totalCases, dir);
             createFile(outputs, "exp", totalCases, dir);
             //dataTbl.initializeDataTable(totalCases+1);
-        }
-
-        void initializeDataTable(int n)
-        {
-            DataTable dt = new DataTable();
-            DataColumn no = new DataColumn("Test Case", typeof(int));
-            DataColumn input = new DataColumn("Input", typeof(string));
-            DataColumn expOut = new DataColumn("Expected Output", typeof(string));
-            DataColumn output = new DataColumn("Output", typeof(string));
-            DataColumn result = new DataColumn("Result", typeof(string));
-
-            dt.Columns.Add(no);
-            dt.Columns.Add(input);
-            dt.Columns.Add(expOut);
-            dt.Columns.Add(output);
-            dt.Columns.Add(result);
-
-            for (int i = 0; i < n; ++i)
-            {
-                DataRow row = dt.NewRow();
-                row[0] = i + 1;
-                row[1] = " - ";
-                row[2] = " - ";
-                row[3] = " - ";
-                row[4] = " - ";
-                dt.Rows.Add(row);
-            }
-            dataTbl.ItemsSource = dt.DefaultView;
-        }
-
-        private void dataTbl_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.initializeDataTable(3);
         }
 
         private void runBtn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
