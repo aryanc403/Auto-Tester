@@ -121,6 +121,12 @@ namespace AdvanceTrackProject
                     break;
                 }
             }
+
+            if(i==-1)
+            {
+                return null;
+            }
+
             path = addr.Substring(0, i);//truncate string to /
             return path;
         }
@@ -171,16 +177,23 @@ namespace AdvanceTrackProject
         //private static async Task StartCrawlerAsync()
         private async Task StartCrawlerAsync()
         {
-            //var url = pathUrlTb.Text;
-            var url = "http://codeforces.com/problemset/problem/957/A";
+            var url = pathUrlTb.Text;
+            //var url = "http://codeforces.com/problemset/problem/957/A";
             //var url = @"http://codeforces.com/problemset/problem/955/A";
             //fileTb.Text = @"E:\PracticeWPF\Tritonic Iridescence\a.exe";
             //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
             var httpClient = new HttpClient(); //create HttpClient class
             var html = await httpClient.GetStringAsync(url);//set Source code
-            //var exeFile = fileTb.Text; 
-            var exeFile = @"E:\PracticeWPF\Tritonic Iridescence\a.exe"; 
+            var exeFile = fileTb.Text;
+            //var exeFile = @"E:\PracticeWPF\Tritonic Iridescence\a.exe"; 
+
+            string dir = findDir(exeFile);
+
+            if(dir==null)
+            {
+                return;
+            }
 
             var htmlDocument = new HtmlDocument(); //create HtmlDocument class
             htmlDocument.LoadHtml(html); // loading html document in HtmlDocument class
@@ -203,8 +216,8 @@ namespace AdvanceTrackProject
             totCases.Text = totalCases.ToString();//display total no of inputs in textbox
 
             //function calls to create in<no>.txe ans exp<no>.txt files in exeFile directory
-            createFile(inputs, "in", totalCases, findDir(exeFile));
-            createFile(outputs, "exp", totalCases, findDir(exeFile));
+            createFile(inputs, "in", totalCases, dir);
+            createFile(outputs, "exp", totalCases, dir);
             //dataTbl.initializeDataTable(totalCases+1);
         }
 
@@ -245,6 +258,11 @@ namespace AdvanceTrackProject
         {
             string location = fileTb.Text;//@"E:\PracticeWPF\Tritonic Iridescence\a.exe"; //
             string dir = findDir(location);
+            if(dir==null)
+            {
+                return;
+            }
+
             string appName = location.Substring(dir.Length + 1, location.Length - dir.Length - 1);
             int totalCases = Convert.ToInt32(totCases.Text);
             for(int i =1; i<= totalCases;++i)
@@ -274,8 +292,9 @@ namespace AdvanceTrackProject
             Stopwatch sw = new Stopwatch();
             sw.Reset();
             sw.Start();
+
             process.StandardInput.WriteLine(app + " <in" + i + ".txt> out" + i + ".txt");
-            process.StandardInput.Flush();
+             process.StandardInput.Flush();
             //int x = process.ExitCode;
             process.StandardInput.WriteLine("exit");
             process.StandardInput.Flush();
