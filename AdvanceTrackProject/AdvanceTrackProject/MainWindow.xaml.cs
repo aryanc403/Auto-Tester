@@ -385,16 +385,10 @@ namespace AdvanceTrackProject
             Stopwatch sw = new Stopwatch();
             sw.Reset();
             sw.Start();
-
-            process.StandardInput.WriteLine(app + " <in" + i + ".txt> out" + i + ".txt");
+            process.StandardInput.WriteLine(app + " <in" + i + ".txt >out" + i + ".txt && exit(0) || exit(-1)");
              process.StandardInput.Flush();
-            //int x = process.ExitCode;
-            process.StandardInput.WriteLine("exit");
-            process.StandardInput.Flush();
-            //int y = process.ExitCode;
-            //process.WaitForExit();
             int TL = Convert.ToInt32(tlVal.Text);
-            bool isTLE = false,a;
+            bool isTLE = false;
             while (process.IsRunning() && (sw.Elapsed.TotalMilliseconds <= (TL + 100)) &&(isTLE==false))
             {
                 if( sw.Elapsed.TotalMilliseconds > TL )
@@ -403,9 +397,9 @@ namespace AdvanceTrackProject
                     sw.Stop();
                     break;
                 }
-                a = process.IsRunning();
             }
             string logFile = dir + "\\log" + i + ".txt";
+            //int code = process.ExitCode;
             sw.Stop();
             if (sw.Elapsed.TotalMilliseconds > TL)
             {
