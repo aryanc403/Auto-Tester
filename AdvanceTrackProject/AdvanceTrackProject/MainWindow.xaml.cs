@@ -59,8 +59,16 @@ namespace AdvanceTrackProject
 
         string getContent(string file)
         {
+            string text;
 
-            string text = File.ReadAllText(file, Encoding.UTF8);
+            try
+            {
+                text = File.ReadAllText(file, Encoding.UTF8);
+            }
+            catch
+            {
+                text = null;
+            }
             return text;
         }
 
@@ -223,6 +231,20 @@ namespace AdvanceTrackProject
             }
         }
 
+        bool IsValidUrl(string url)
+        {
+
+            for(int i=0;i<url.Length - 14;++i)
+            {
+                if(url.Substring(i,14)=="codeforces.com")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         //private static async Task StartCrawlerAsync()
         private async Task StartCrawlerAsync()
         {
@@ -233,6 +255,13 @@ namespace AdvanceTrackProject
             //var url = "http://codeforces.com/contest/957/submission/36585822";//sample url must change before final submit
             //var url = "http://codeforces.com/problemset/problem/949/B";
             var httpClient = new HttpClient(); //create HttpClient class
+
+            if (IsValidUrl(url)==false)
+            {
+                pathUrlTb.Text = "Error - Invalid Url.";
+                return;
+            }
+
             var html = await httpClient.GetStringAsync(url);//set Source code
             var exeFile = fileTb.Text;
             //var exeFile = @"E:\PracticeWPF\Tritonic Iridescence\a.exe"; 
@@ -241,6 +270,7 @@ namespace AdvanceTrackProject
 
             if(dir==null)
             {
+                fileTb.Text = "Error - Directory Not Found.";
                 return;
             }
 
@@ -285,6 +315,7 @@ namespace AdvanceTrackProject
             {
                 runExe(appName,dir,i);
             }
+            initializeDataTable();
         }
 
         private async Task runExe(string app,string dir ,int i)
