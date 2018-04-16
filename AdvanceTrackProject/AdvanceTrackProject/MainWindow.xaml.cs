@@ -333,8 +333,36 @@ namespace AdvanceTrackProject
             {
                 runExe(appName,dir,i);
                 //run result generator.
+                runGen(dir, i);
             }
             initializeDataTable();
+        }
+
+        private void runGen(string dir, int i)
+        {//fill this fn
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.CreateNoWindow = true;// true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
+            string DIR = Directory.GetCurrentDirectory();
+            int drive = dir.IndexOf("\\");
+            process.StandardInput.WriteLine(DIR.Substring(0, drive));
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine(@"cd /../../../../../../../../../../../../../");
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("cd " + DIR.Substring(drive, DIR.Length - drive));
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("cd " + @"../../../");
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("cd " + @"Result Generator");
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("result \"" + dir + @"\exp" + i + ".txt\" \"" + dir + @"\out" + i + ".txt\" \"" + dir + @"\res" + i + ".txt\" \"" +dir + @"\log" + i + ".txt\"");
+            process.StandardInput.Flush();
+            process.StandardInput.WriteLine("exit");
+            process.StandardInput.Flush();
         }
 
         private void runExe(string app,string dir ,int i)
