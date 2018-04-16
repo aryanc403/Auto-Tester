@@ -233,7 +233,6 @@ namespace AdvanceTrackProject
 
         void createFileEmpty(string fileType, int totalCases, string dir)
         {
-            string toWrite = "";//text to be written in file
             List<string> lines = new List<string>();
             //loop to transverse all files
             for (int i = 1; i <= totalCases; ++i)
@@ -410,7 +409,9 @@ namespace AdvanceTrackProject
             sw.Stop();
             if (sw.Elapsed.TotalMilliseconds > TL)
             {
-                kill_Process(process.Id,dir, "out" + i + ".txt");//process.Kill();
+                //process.Kill();
+                //process.Close();
+                kill_Process(process.Id, dir, "out" + i + ".txt");//process.Kill();
                 //process.WaitForExit();
                 List<string> TLEVerdict = new List<string>();
                 TLEVerdict.Add(@"TimeLimitExceed.");

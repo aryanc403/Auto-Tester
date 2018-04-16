@@ -5,52 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdvanceTrackProject"
         mc:Ignorable="d"
-        Title="AdvanceTrackProject" Height="822.4" Width="860">
+        Title="AdvanceTrackProject" Height="850" Width="1536" Left="0" Top="0" WindowState="Maximized">
     <Grid Margin="0,0,-0.2,11.4">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="27*"/>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="93*"/>
-            <ColumnDefinition Width="220*"/>
-            <ColumnDefinition Width="220*"/>
-            <ColumnDefinition Width="65*"/>
-            <ColumnDefinition Width="18*"/>
-            <ColumnDefinition Width="96*"/>
-            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="16*"/>
-            <RowDefinition Height="45*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="35*"/>
-            <RowDefinition Height="14*"/>
-            <RowDefinition Height="38*"/>
-            <RowDefinition Height="430*"/>
-            <RowDefinition Height="43*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Name="fileLbl" Content="Path (.exe)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,5.6,0,0" Height="25" Width="64" Grid.Row="3" Grid.ColumnSpan="2"/>
-        <TextBox Name="fileTb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Path to Exectutable File" VerticalAlignment="Top" Width="590" Margin="10,5.6,0,0" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="5"/>
-        <Button Name="browseBtn" Click="browseBtn_Click" Content="Browse..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,5.6,0,0" Grid.Row="3" Height="23" Grid.Column="7" Grid.ColumnSpan="2"/>
+        <Label Name="fileLbl" Content="Path (.exe)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,54,0,0" Height="28" Width="122"/>
+        <TextBox Name="fileTb" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" Text="Path to Exectutable File" VerticalAlignment="Top" Width="1228" Margin="156,54,0,0"/>
+        <Button Name="browseBtn" Click="browseBtn_Click" Content="Browse..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" Margin="1407,54,0,0" Height="28"/>
 
-        <Label Name="pathUrlLbl" Content="Path (URL)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,6,0,0" Height="33" Width="64" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <TextBox Name="pathUrlTb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Problem Statement URL" VerticalAlignment="Top" Width="590" Margin="10,10,0,0" Grid.Column="3" Grid.ColumnSpan="5" Grid.Row="1"/>
-        <Button Name="fetchBtn" Content="Fetch..." Click="fetchBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Margin="18.2,10,0,0" Height="23" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Name="pathUrlLbl" Content="Path (URL)" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="28" Width="122"/>
+        <TextBox Name="pathUrlTb" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" Text="Problem Statement URL" VerticalAlignment="Top" Width="1228" Margin="156,10,0,0"/>
+        <Button Name="fetchBtn" Content="Fetch..." Click="fetchBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" Margin="1407,10,0,0" Height="28" RenderTransformOrigin="0.433,-0.939"/>
 
-        <DataGrid Name="dataTbl" Grid.ColumnSpan="10" HorizontalAlignment="Left" Height="283" VerticalAlignment="Top" Width="820" Margin="10,223,0,0" Grid.Row="6"/>
+        <DataGrid Name="dataTbl" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="750" Margin="770,108,0,0"/>
 
-        <Label Name="inpLbl" Content="INPUT" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,171,0,0" Grid.Row="6" Grid.ColumnSpan="3" Height="38" Width="159" Grid.Column="1"/>
-        <Label Name="expOutLbl" Content= "Expected Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="96.6,171,0,0" Grid.Row="6" Height="38" Width="229" Grid.Column="3" Grid.ColumnSpan="2"/>
-        <Label Name="prmOutLbl" Content="Program Output" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,171,0,0" Grid.Row="6" Height="38" Width="228" Grid.Column="5"/>
-        <Label Name="resLbl"  Content="Result" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,171,0,0" Grid.Row="6" Height="38" Width="185" Grid.Column="6" Grid.ColumnSpan="4"/>
-
-        <Button Name="runBtn" MouseDoubleClick="runBtn_MouseDoubleClick" Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Grid.Column="7" Margin="18.2,10,0,0" Grid.Row="7" Height="19" Grid.ColumnSpan="2"/>
-        <Label Name="tlLbl" Content="Time Limit (in ms) -" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,0.2,0,0" Grid.Row="7" Height="29" Width="107" Grid.ColumnSpan="4"/>
-        <TextBox Name="tlVal" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="2000" VerticalAlignment="Top" Width="120" Grid.Column="3" Margin="56.6,0.2,0,0" Grid.Row="7" Grid.ColumnSpan="2"/>
-        <Label Content="Total Test Cases" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="133" Grid.Column="4" Margin="95.8,0.2,0,0" Grid.Row="7"/>
-        <TextBox Name="totCases" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="111" Grid.Column="5" Margin="1,0.2,0,0" Grid.Row="7"/>
-        <WebBrowser Name="stateMent" HorizontalAlignment="Left" Height="231" VerticalAlignment="Top" Width="820" Margin="10,43,0,0" Grid.Row="3" Grid.RowSpan="4" Style="{DynamicResource stateMent}" Grid.ColumnSpan="10">
+        <Button Name="runBtn" MouseDoubleClick="runBtn_MouseDoubleClick" Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="1400,713,0,0" Height="45"/>
+        <Label Name="tlLbl" Content="Time Limit (in ms) -" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="770,713,0,0" Height="45" Width="150"/>
+        <TextBox Name="tlVal" HorizontalAlignment="Left" Height="45" TextWrapping="Wrap" Text="2000" VerticalAlignment="Top" Width="150" Margin="928,713,0,0"/>
+        <Label Content="Total Test Cases" HorizontalAlignment="Left" VerticalAlignment="Top" Height="45" Width="150" Margin="1083,713,0,0"/>
+        <TextBox Name="totCases" HorizontalAlignment="Left" Height="45" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="150" Margin="1238,713,0,0"/>
+        <WebBrowser Name="stateMent" HorizontalAlignment="Left" Height="650" VerticalAlignment="Top" Width="750" Margin="10,108,0,0" Style="{DynamicResource stateMent}">
             <WebBrowser.Resources>
                 <Style x:Key="stateMent" TargetType="{x:Type WebBrowser}"/>
             </WebBrowser.Resources>
