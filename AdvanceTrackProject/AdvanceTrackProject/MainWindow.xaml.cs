@@ -162,7 +162,7 @@ namespace AdvanceTrackProject
         private void fetchBtn_Click(object sender, RoutedEventArgs e)
         {
             StartCrawlerAsync();//call task of web Crawler
-            initializeDataTable();
+            //initializeDataTable();
         }
 
         public string findDir(string addr)
@@ -208,22 +208,22 @@ namespace AdvanceTrackProject
             return text;
         }
 
-        void createFile( List <HtmlNode> data ,string fileType,int totalCases, string dir)
+        void createFile(List<HtmlNode> data, string fileType, int totalCases, string dir)
         {
             //loop to transverse all input and expected output files
-            for(int i = 1; i <= totalCases; ++i)
+            for (int i = 1; i <= totalCases; ++i)
             {
                 string fileName = dir + "\\" + fileType + i + ".txt";//current file name with address
-                string toWrite = convertHtmlToText(data[i-1].InnerHtml);//text to be written in testcase file
+                string toWrite = convertHtmlToText(data[i - 1].InnerHtml);//text to be written in testcase file
 
                 //separating lines in test case file
                 List<string> lines = new List<string>();
                 int end;
                 end = toWrite.IndexOf("\n");
-                while(end!=-1)
+                while (end != -1)
                 {
                     lines.Add(toWrite.Substring(0, end));
-                    toWrite = toWrite.Substring(end + 1, toWrite.Length - end -1);
+                    toWrite = toWrite.Substring(end + 1, toWrite.Length - end - 1);
                     end = toWrite.IndexOf("\n");
                 }
 
@@ -231,17 +231,27 @@ namespace AdvanceTrackProject
             }
         }
 
+        void createFileEmpty(string fileType, int totalCases, string dir)
+        {
+            string toWrite = "";//text to be written in file
+            List<string> lines = new List<string>();
+            //loop to transverse all files
+            for (int i = 1; i <= totalCases; ++i)
+            {
+                string fileName = dir + "\\" + fileType + i + ".txt";//current file name with address
+                System.IO.File.WriteAllLines(fileName, lines);//creating test case file and adding test into it
+            }
+        }
+
         bool IsValidUrl(string url)
         {
-
-            for(int i=0;i<url.Length - 14;++i)
+            for(int i=0;i<=url.Length - 14;++i)
             {
                 if(url.Substring(i,14)=="codeforces.com")
                 {
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -291,13 +301,21 @@ namespace AdvanceTrackProject
                                 .Equals("output")).ToList();
 
             var totalCases = inputs.Count();//count no of inputs
-
             totCases.Text = totalCases.ToString();//display total no of inputs in textbox
 
+            if(totalCases<=0)
+            {
+                pathUrlTb.Text = "Error - No Test Cases found.";
+                return;
+            }
+            
             //function calls to create in<no>.txe ans exp<no>.txt files in exeFile directory
             createFile(inputs, "in", totalCases, dir);
             createFile(outputs, "exp", totalCases, dir);
-            //dataTbl.initializeDataTable(totalCases+1);
+            createFileEmpty("out", totalCases, dir);
+            createFileEmpty("log", totalCases, dir);
+            createFileEmpty("res", totalCases, dir);
+            initializeDataTable();
         }
 
         private void runBtn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -314,15 +332,16 @@ namespace AdvanceTrackProject
             for(int i =1; i<= totalCases;++i)
             {
                 runExe(appName,dir,i);
+                //run result generator.
             }
             initializeDataTable();
         }
 
-        private async Task runExe(string app,string dir ,int i)
+        private void runExe(string app,string dir ,int i)
         {
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.CreateNoWindow = false;// true;
+            process.StartInfo.CreateNoWindow = true;// true;
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
