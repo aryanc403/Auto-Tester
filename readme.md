@@ -26,7 +26,7 @@ It is built to provide maximum automation and to relieve the contestant as much 
 
 * Ability to create in/out files in your working directory.
 
-* Support for all contest languages (C++, Java, Python, ...).
+* Support for contest languages C/C++(Well Tested). Other Compiler Languages(Yet to be Tested). And Does not support Interpretor (Python etc.) languages. 
 
 * Written in C# and and will run only on Windows OS.
 
