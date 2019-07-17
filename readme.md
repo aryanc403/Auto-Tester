@@ -1,5 +1,4 @@
-# Tester Application
-### ESC101 Advance Track Project 
+# ESC101 Advance Track Project 
 
 This project aims to provide basic functionality as automatic tester for CodeForces rounds and Practice Problems. This project is for __ESC101A (Introduction to Computing)__.
 
